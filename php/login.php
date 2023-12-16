@@ -42,10 +42,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Return user details as JSON response
             echo json_encode(['id' => $userId, 'fisrtName' => $userName, 'emailAddress' => $userEmail]);
         } else {
-            echo "Wrong email or password"; 
+            echo json_encode( array('error' => 'Wrong email or password')); 
         }
     } else {
-        echo "Wrong email or password";
+        echo json_encode( array('error' => 'Wrong email or password'));
     }
     
     $query->close();

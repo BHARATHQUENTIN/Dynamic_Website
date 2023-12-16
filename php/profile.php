@@ -13,23 +13,6 @@ function connectToMongoDB()
     return $collection;
 }
 
-/*function getUserDetails()       //Unwanted 
-{
-    $redis = new Predis\Client();
-    $redisKey = "user";
-    $userEmail = $redis->hget($redisKey, 'emailAddress');
-    $userName = $redis->hget($redisKey, 'name');
-
-    $userData = [
-        'email' => $userEmail,
-        'name' => $userName,
-    ];
-
-    header('Content-Type: application/json');
-    echo json_encode($userData);
-} */
-
-
 function fetchUserData($userEmail)
 {
     $response = ['success' => false];
@@ -58,22 +41,22 @@ function insertOrUpdateUserData($userEmail, $name, $contact, $age, $dateOfBirth,
 
         $existingDocument = $collection->findOne(['email' => $userEmail]);
 
-        // Create an array to store update data
+       
         $updateData = [];
 
         if ($existingDocument) {
-            // Always include the existing fields in the update data
+           
             $updateData['contact'] = $existingDocument['contact'];
             $updateData['age'] = $existingDocument['age'];
             $updateData['dateOfBirth'] = $existingDocument['dateOfBirth'];
             $updateData['address'] = $existingDocument['address'];
 
-            // Update with new values if provided
+         
             if (isset($contact) && ($contact !== "NA" && $contact !== '')) {
                 $updateData['contact'] = $contact;
             }
 
-            // Calculate age based on date of birth
+          
             if (isset($dateOfBirth) && $dateOfBirth !== "NA" && $dateOfBirth !== '') {
                 $dob = new DateTime($dateOfBirth);
                 $today = new DateTime();
@@ -97,17 +80,17 @@ function insertOrUpdateUserData($userEmail, $name, $contact, $age, $dateOfBirth,
             if ($updateResult->getModifiedCount() > 0) {
                 $response['success'] = true;
                 $response['message'] = 'Document updated in MongoDB successfully.';
-                $response['age'] = $age; // Include calculated age in the response
+                $response['age'] = $age; 
             } else {
                 $response['error'] = 'Failed to update document in MongoDB. No changes made.';
             }
         } else {
-            // If the document doesn't exist, insert a new one
+       
             $newDocument = [
                 'email' => $userEmail,
                 'firstname' => $name,
                 'contact' => isset($contact) ? $contact : "NA",
-                'age' => $age, // Use the provided age or the calculated age
+                'age' => $age, 
                 'dateOfBirth' => isset($dateOfBirth) ? $dateOfBirth : "NA",
                 'address' => isset($address) ? $address : "NA",
             ];
@@ -117,7 +100,7 @@ function insertOrUpdateUserData($userEmail, $name, $contact, $age, $dateOfBirth,
             if ($result->getInsertedCount() > 0) {
                 $response['success'] = true;
                 $response['message'] = 'Document inserted in MongoDB successfully.';
-                $response['age'] = $age; // Include age in the response
+                $response['age'] = $age; 
             } else {
                 $response['error'] = 'Failed to insert document in MongoDB.';
             }
