@@ -1,0 +1,56 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    background-color: #c5e4e4;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+}
+
+.border {
+    border-radius: 50px;
+}
+
+
+
+/* This is  unimportant  */
+
+.rounded-pill-input {
+    border-radius: 1.25rem;
+    transition: background-color 0.3s ease;
+}
+
+.rounded-pill-input:hover {
+    background-color: #ffffff;
+}
+
+/* Till this   */
+
+.custom-input {
+    width: 300px;
+}
+
+.custom-input input[type="text"]:not(:focus) + label {
+    color: gray;
+}
+
+
+.custom-input input[type="text"]:not(:focus) + label,
+.custom-input input[type="email"]:not(:focus) + label,
+.custom-input input[type="password"]:not(:focus) + label {
+    color: gray;
+}
+
+
+.custom-input input[type="text"]:hover(:focus) + label,
+.custom-input input[type="email"]:hover + label,
+.custom-input input[type="password"]:hover + label {
+    color: black;
+}
+
+
+
+ 
+
